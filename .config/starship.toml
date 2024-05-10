@@ -1,0 +1,51 @@
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+format = '''(bold green)$time$username$rust$c$python$directory$git_branch$character'''
+
+# Inserts a blank line between shell prompts
+add_newline = false
+
+[character]
+success_symbol = '[➜](bold green)'
+error_symbol = '[➜](bold green)'
+
+[username]
+style_user = 'white bold'
+style_root = 'black bold'
+format = '[$user]($style) '
+disabled = false
+show_always = false
+
+[status]
+disabled = false
+
+[directory]
+format = "[$path ]($style)"
+truncation_length = 2
+truncation_symbol = "…/"
+
+[git_branch]
+symbol = '🌱 '
+truncation_length = 4
+truncation_symbol = ''
+style = 'green bold'
+ignore_branches = ['master', 'main']
+
+
+[time]
+disabled = false
+time_format = "%R" # Hour:Minute Format
+format = '[$time ]($style)'
+
+[docker_context]
+format = 'via [🐋 $context](blue bold)'
+
+[python]
+symbol='🐍'
+version_format = 'v${major}.${minor}'
+format = '[${symbol}${pyenv_prefix}${version}$virtualenv ]($style)'
+python_binary = ['./venv/bin/python','./.venv/bin/python', 'python', 'python3', 'python2']
+
+[rust]
+symbol = '🦀'
+format = '[${symbol}${version} ]($style)'
