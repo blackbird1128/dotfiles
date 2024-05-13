@@ -23,7 +23,7 @@
 # is used in the bar {} block below.
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-font pango: Iosevka Nerd Font 12
+font pango: "Iosevka Nerd Font 12"
 
 # set the mod key to the winkey:
 set $mod Mod4
@@ -49,14 +49,14 @@ workspace_layout default
 ##############################
 
 #border indicator on windows:
-new_window pixel 1
+new_window pixel 3
 
 # thin borders
 hide_edge_borders both
 
 # Set inner/outer gaps
-gaps inner 5
-gaps outer 2
+gaps inner 2
+gaps outer 1
 
 # show window title bars (not officially supported with i3gaps)
 #default_border normal
@@ -186,7 +186,7 @@ bindsym $mod+Shift+e exec --no-startup-id ~/.config/i3/scripts/powermenu
 # lock with a picture:
 #bindsym $mod+l exec --no-startup-id i3lock -i  ~/.config/i3/i3-lock-screen.png -p default|win -t
 # lock by blurring the screen:
-#bindsym $mod+l exec --no-startup-id ~/.config/i3/scripts/blur-lock
+bindsym $mod+l exec --no-startup-id ~/.config/i3/scripts/blur-lock
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -204,6 +204,11 @@ bindsym F1 exec --no-startup-id ~/.config/i3/scripts/keyhint-2
 #bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight +10 && notify-send "Brightness - $(xbacklight -get | cut -d '.' -f 1)%"
 #bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -10 && notify-send "Brightness - $(xbacklight -get | cut -d '.' -f 1)%"
 # Backlight setting using dunst osc
+
+bindsym $mod+XF86MonBrightnessUp exec --no-startup-id playerctl next 
+bindsym $mod+XF86MonBrightnessDown exec --no-startup-id playerctl previous
+bindsym $mod+Escape exec --no-startup-id playerctl play-pause
+
 bindsym XF86MonBrightnessUp exec --no-startup-id ~/.config/i3/scripts/volume_brightness.sh brightness_up
 bindsym XF86MonBrightnessDown exec --no-startup-id ~/.config/i3/scripts/volume_brightness.sh brightness_down
 
@@ -232,10 +237,10 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
-bindsym $mod+h split h
+bindsym $mod+h split v
 
 # split in vertical orientation
-bindsym $mod+v split v
+bindsym $mod+v split h
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
@@ -268,8 +273,8 @@ bindsym XF86AudioRaiseVolume exec --no-startup-id ~/.config/i3/scripts/volume_br
 bindsym XF86AudioLowerVolume exec --no-startup-id ~/.config/i3/scripts/volume_brightness.sh volume_down
 
 # gradular volume control
-bindsym $mod+XF86AudioRaiseVolume exec --no-startup-id amixer -D pulse sset Master 1%+ && pkill -RTMIN+1 i3blocks
-bindsym $mod+XF86AudioLowerVolume exec --no-startup-id amixer -D pulse sset Master 1%- && pkill -RTMIN+1 i3blocks
+#bindsym $mod+XF86AudioRaiseVolume exec --no-startup-id amixer -D pulse sset Master 1%+ && pkill -RTMIN+1 i3blocks
+#bindsym $mod+XF86AudioLowerVolume exec --no-startup-id amixer -D pulse sset Master 1%- && pkill -RTMIN+1 i3blocks
 
 # mute
 #bindsym XF86AudioMute exec --no-startup-id amixer sset Master toggle && killall -USR1 i3blocks
@@ -296,6 +301,8 @@ bindsym $mod+Print exec --no-startup-id scrot ~/%Y-%m-%d-%T-screenshot.png && no
 
 
 bindsym Print exec import -window root -crop $(slop) ~/inbox/screenshot/"$(date +%F\ %T)".png  && notify-send "Screenshot saved to ~/inbox/screenshot/$(date +%F\ %T).png"
+
+bindsym Shift+Print exec import -window root -crop $(slop) ~/inbox/screenshot/"$(date +%F\ %T)".png  && notify-send "Screenshot saved to ~/inbox/screenshot/$(date +%F\ %T).png and copied to clipboard" && xclip -selection clipboard -t image/png -i ~/inbox/screenshot/"$(date +%F\ %T)".png
 
 # Power Profiles menu switcher (rofi)
 bindsym $mod+Shift+p exec --no-startup-id ~/.config/i3/scripts/power-profiles
@@ -330,6 +337,7 @@ set $ws10 "10"
 # bind program to workspace and focus to them on startup:
 assign [class="kitty"] $ws1
 assign [class="(?i)firefox"] $ws2
+assign [class="Why3"] $ws5
 #assign [class="Thunar"] $ws3
 #assign [class="thunderbird"] $ws4
 #assign [class="TelegramDesktop"] $ws5
@@ -337,6 +345,7 @@ assign [class="(?i)firefox"] $ws2
 # automatic set focus new window if it opens on another workspace than the current:
 for_window [class=kitty] focus
 for_window [class=(?i)firefox] focus
+for_window [class=Why3] focus
 #for_window [class=Thunar] focus
 #for_window [class=Thunderbird] focus
 #for_window [class=TelegramDesktop] focus
@@ -389,7 +398,7 @@ exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 #exec --no-startup-id dex -a -s /etc/xdg/autostart/:~/.config/autostart/
 exec --no-startup-id dex --autostart --environment i3
 
-exec_always --no-startup-id redshift
+# exec_always --no-startup-id redshift
 
 # start welcome app
 #exec --no-startup-id sh /usr/share/endeavouros/scripts/welcome --startdelay=3 
@@ -409,7 +418,7 @@ exec --no-startup-id ~/.screenlayout/monitor.sh
 
 # set wallpaper
 # exec --no-startup-id sleep 2 && nitrogen --restore
-exec --no-startup-id sleep 1 && feh --bg-scale ~/wallpapers/anastasia_ermakova_coffeeshop_sunset.jpg
+exec --no-startup-id sleep 1 && feh --bg-scale ~/wallpapers/minimal_cyberpunk.png
 
 # set powersavings for display:
 exec --no-startup-id xset s 480 dpms 600 600 600
@@ -429,10 +438,10 @@ exec --no-startup-id xset s 480 dpms 600 600 600
 # Desktop notifications
 # dunst config used ~/.config/dunst/dunstrc
 # set alternative config if needed:
-#exec --no-startup-id /usr/bin/dunst --config ~/.config/dunst/dunstrc
+exec --no-startup-id /usr/bin/dunst --config ~/.config/dunst/dunstrc
 # may need to run dbus-launch explicitly: 
 #exec --no-startup-id dbus-launch /usr/bin/dunst
-exec --no-startup-id /usr/bin/dunst
+#exec --no-startup-id /usr/bin/dunst
 # alternative if you installed aside with XFCE4:
 # exec --no-startup-id /usr/lib/xfce4/notifyd/xfce4-notifyd &
 
@@ -494,90 +503,130 @@ for_window [class="urxvt"] border pixel 1
 # color settings for bar and windows #
 ######################################
 
-# Define colors variables:
-set $darkbluetrans	#08052be6
-set $darkblue		#08052b
-set $lightblue		#5294e2
-set $urgentred		#e53935
-set $white		#ffffff
+set $purewhite	#ffffff
+set $white		#fbf1c7
+set $color_full #fbf1c7
+
 set $black		#000000
 set $purple		#e345ff
-set $darkgrey		#383c4a
+set $darkgrey	#383c4a
 set $grey		#b0b5bd
 set $mediumgrey		#8b8b8b
 set $yellowbrown	#e1b700
 
-# define colors for windows:
-#class		        	border		bground		text		indicator	child_border
-client.focused		    	$lightblue	$darkblue	$white		$lightblue	$lightblue
-client.unfocused	    	$darkblue	$darkblue	$grey		$darkgrey	$darkgrey
-client.focused_inactive		$darkblue	$darkblue	$grey		$black		$black
-client.urgent		    	$urgentred	$urgentred	$white		$yellowbrown	$yellowbrown
+set $bg #32302f
+set $red #cc241d
+set $green #98971a
+set $yellow #d79921
+set $blue #458588
+set $purple #b16286
+set $aqua #689d68
+set $gray #928374
+set $darkgray #1d2021
+set $lightgray #a89984
+set $orange #d65d0e
+set $lightred #fb4934
+set $lightgreen #b8bb26
+set $lightyellow #fabd2f
+set $lightblue #83a598
+set $lightpurple #d3869b
+set $lightaqua #8ec07c
+
+
+
+#selection_foreground    #ebdbb2
+#selection_background    #d65d0e
+
+#background              #282828
+#foreground              #ebdbb2
+
+#color0                  #3c3836
+#color1                  #cc241d
+#color2                  #98971a
+#color3                  #d79921
+#color4                  #458588
+#color5                  #b16286
+#color6                  #689d6a
+#color7                  #a89984
+#color8                  #928374
+#color9                  #fb4934
+#color10                 #b8bb26
+#color11                 #fabd2f
+#color12                 #83a598
+#color13                 #d3869b
+#color14                 #8ec07c
+#color15                 #fbf1c7
+
+#cursor                  #bdae93
+#cursor_text_color       #665c54
+
+
+# blue gruvbox
+# class                 border|backgr|text|indicator|child_border
+client.focused          $blue $blue $white $blue $blue
+client.focused_inactive $bg $bg $white $bg $bg
+client.unfocused       $bg $bg $white $bg $bg 
+client.urgent           $red $red $white $red $red
+
+
+
 
 ############################################
 # bar settings (input comes from i3blocks) #
 ############################################
 
-# Start i3bar to display a workspace bar
-# (plus the system information i3status finds out, if available)
 bar {
-		font pango: Noto Sans Regular 10
-		status_command i3blocks -c ~/.config/i3/i3blocks.conf
-	    	position bottom
-#	    	i3bar_command i3bar --transparency
-# it could be that you have no primary display set: set one (xrandr --output <output> --primary)
-# reference: https://i3wm.org/docs/userguide.html#_tray_output
-		    #tray_output primary
-		    tray_padding 0
+    position bottom
+    i3bar_command i3bar 
+    status_command i3blocks -c ~/.config/i3/i3blocks.conf 
 
-# When strip_workspace_numbers is set to yes,
-# any workspace that has a name of the form
-# “[n][:][NAME]” will display only the name.
-strip_workspace_numbers yes
-##strip_workspace_name no
+    strip_workspace_numbers yes
 
-		    colors {
-		    separator          $purple
-		    background         $darkgrey
-		    statusline         $white
-#                          		border 		        bg		txt		indicator
-		focused_workspace	$mediumgrey	   	$grey		$darkgrey	$purple
-		active_workspace	$lightblue      	$mediumgrey	$darkgrey	$purple
-		inactive_workspace	$darkgrey   		$darkgrey	$grey		$purple
-		urgent_workspace	$urgentred	    	$urgentred	$white		$purple
-	}
+ 	font pango: Noto Sans Regular 10
+    colors {
+        # bar background color
+        background  #32302f
+        # text color used for blocks that do not have a color specified.
+        statusline  #ebdbb2
+        # workspaces section            
+        #                    border  backgr. text
+        focused_workspace    $lightblue $lightblue $white
+        inactive_workspace   $bg $bg $white
+        active_workspace     $bg $bg $white
+        urgent_workspace     $red $red $bg
+    }
 }
 
-# you can add different bars for multidisplay setups on each display:
-# set output HDMI-0 to the display you want the bar, --transparency can be set.
-# Transparency needs rgba color codes to be used where the last two letters are the transparency factor see here:
-# https://gist.github.com/lopspower/03fb1cc0ac9f32ef38f4
-# #08052be6 --> e6=90%
-
+# target                 title     bg    text   indicator  border
+# client.focused           $lavender $base $text  $rosewater $lavender
+# client.focused_inactive  $overlay0 $base $text  $rosewater $overlay0
+# client.unfocused         $overlay0 $base $text  $rosewater $overlay0
+# client.urgent            $peach    $base $peach $overlay0  $peach
+# client.placeholder       $overlay0 $base $text  $overlay0  $overlay0
+# client.background        $base
+#
+# # bar
 # bar {
-#	font pango: Noto Sans Regular 10
-#	status_command i3blocks -c ~/.config/i3/i3blocks-2.conf
-#	i3bar_command i3bar --transparency
-#	output HDMI-0
-#	position bottom
 #
-# When strip_workspace_numbers is set to yes,
-# any workspace that has a name of the form
-# “[n][:][NAME]” will display only the name.
-#strip_workspace_numbers yes
-##strip_workspace_name no
+#   position bottom
+#   status_command i3blocks -c ~/.config/i3/i3blocks.conf
 #
-#	colors {
-#		separator          $purple
-#		background         $darkbluetrans
-#        	statusline         $white
-#					border		bg		txt		indicator
-#		focused_workspace	$lighterblue	$lighterblue	$darkblue	$purple
-#		active_workspace	$lightdblue	$lightdblue	$darkblue	$purple
-#		inactive_workspace	$darkblue	$darkblue	$lightdblue	$purple
-#		urgent_workspace	$urgentred	$urgentred	$white		$purple
-#	}
-#}
+#   font pango: Noto Sans Regular 11
+#   # border  backgr. text
+#   colors {
+#     background         $base
+#     statusline         $text
+#     focused_statusline $text
+#     focused_separator  $base
+#     focused_workspace  $lavender $base $text
+#     active_workspace   $base $base $blue
+#     inactive_workspace $base $base $surface1
+#     urgent_workspace   $base $base $surface1
+#     binding_mode       $base $base $surface1
+#   }
+#
+#   strip_workspace_numbers yes
+# }
 
 #####################################
 # Application menu handled by rofi: #
