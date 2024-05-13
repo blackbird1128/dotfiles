@@ -10,6 +10,20 @@ import os
 import re
 
 config = dict(os.environ)
+
+# gruvbox colors
+config["color_10"] = config.get("color_10", "#fbf1c7")
+config["color_20"] = config.get("color_20", "#d65d0e")
+config["color_30"] = config.get("color_30", "#d79921")
+config["color_40"] = config.get("color_40", "#b57614")
+config["color_50"] = config.get("color_50", "#b8bb26")
+config["color_60"] = config.get("color_60", "#98971a")
+config["color_70"] = config.get("color_70", "#8ec07c")
+config["color_80"] = config.get("color_80", "#689d6a")
+config["color_full"] = config.get("color_full", "#fbf1c7")
+config["color_charging"] = config.get("color_charging", "#fabd2f")
+
+
 status = check_output(['acpi'], universal_newlines=True)
 
 if not status:
