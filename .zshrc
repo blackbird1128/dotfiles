@@ -13,7 +13,16 @@ autoload -Uz promptinit
 # source ~/.functions
 #prompt adam1
 
-setopt histignorealldups sharehistory
+setopt hist_ignore_dups share_history
+setopt append_history
+setopt inc_append_history
+setopt hist_find_no_dups
+
+setopt complete_in_word
+setopt always_to_end
+
+setopt prompt_subst
+setopt list_packed
 
 # Use emacs keybindings even if our EDITOR is set to vi
 #bindkey -e
@@ -22,6 +31,8 @@ setopt histignorealldups sharehistory
 HISTSIZE=10000
 SAVEHIST=10000
 HISTFILE=~/.zsh_history
+
+[[ -f ~/repos/why3/share/zsh/_why3 ]] && fpath=(~/repos/why3/share/zsh $fpath)
 
 # Use modern completion system
 autoload -Uz compinit 
@@ -35,10 +46,15 @@ alias 'cd=z'
 alias ls='eza --hyperlink' 
 alias ll='ls -l'
 alias cargo-update="cargo install --list | grep '^[a-zA-Z0-9_\-]* v[0-9.]*:$' | cut -d ' ' -f1 | xargs cargo install"
-alias get-win-name="xprop | tail -n 1 | cut -d '=' -f 2 | tr -d '\"' | tr -d ' '"
+alias cargo-list="cargo install --list | grep '^[a-zA-Z0-9_\-]* v[0-9.]*:$' | cut -d ' ' -f1"
+alias get-win-name="xprop | grep 'WM_CLASS(STRING)' | cut -d '\"' -f2"
+alias get-win-title="xprop | grep 'WM_NAME(STRING)' | cut -d '\"' -f2"
+alias get-win-class="xprop | grep 'WM_CLASS(STRING)' | cut -d '\"' -f4"
 alias icat="kitty +kitten icat --transfer-mode=stream"
 alias prename="perl-rename"
 alias paclist="pacman -Qq | fzf --preview 'pacman -Qil {}' --layout=reverse --bind 'enter:execute(pacman -Qil {} | less)'"
+alias paclist-debug="pacman -Q | grep -E '\-debug'"
+alias pacman-rm-debug="sudo pacman -Ru $(pacman -Q | grep -E '\-debug' | awk '{print $1}')"
 alias wget=wget --hsts-file="$XDG_DATA_HOME/wget-hsts"
 
 zstyle ':completion:*' auto-description 'specify: %d'
@@ -58,6 +74,8 @@ zstyle ':completion:*' verbose true
 
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
+
+
 
 [[ -a "/etc/zsh_command_not_found" ]] && . /etc/zsh_command_not_found
 
@@ -81,9 +99,21 @@ display-colors() {
 
 }
 
+unwrap () {
+
+    if [[ ! -d $1 ]]; then
+        echo "Usage: unwrap <directory>"
+        return 1
+    fi
+    mv $1 $1/..
+    rmdir $1
+
+}
+
 eval "$(zoxide init zsh)"
 eval "$(starship init zsh)"
 eval "$(mcfly init zsh)"
 
 # opam configuration
 [[ ! -r ~/.local/share/opam/opam-init/init.zsh ]] || source ~/.local/share/opam/opam-init/init.zsh  > /dev/null 2> /dev/null
+
