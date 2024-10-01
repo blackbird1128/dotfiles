@@ -54,8 +54,10 @@ alias icat="kitty +kitten icat --transfer-mode=stream"
 alias prename="perl-rename"
 alias paclist="pacman -Qq | fzf --preview 'pacman -Qil {}' --layout=reverse --bind 'enter:execute(pacman -Qil {} | less)'"
 alias paclist-debug="pacman -Q | grep -E '\-debug'"
-alias pacman-rm-debug="sudo pacman -Ru $(pacman -Q | grep -E '\-debug' | awk '{print $1}')"
+alias pacman-rm-debug="sudo pacman -Ru $(pacman -Q | grep -E '\-debug' | awk 'ORS=" " {print $1}')"
 alias wget=wget --hsts-file="$XDG_DATA_HOME/wget-hsts"
+alias lg="lazygit"
+alias cbcopy="xclip -sel clip"
 
 zstyle ':completion:*' auto-description 'specify: %d'
 zstyle ':completion:*' completer _expand _complete _correct _approximate
