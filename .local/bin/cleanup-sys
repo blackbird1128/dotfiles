@@ -1,0 +1,25 @@
+#!/bin/bash
+
+orphans=$( pacman -Qdtq )
+
+if [ "$orphans" ]; then
+    echo "found orphans"
+    printf "removing: \n%s\n" "$orphans"
+    echo "confirm (y/n) "
+    read -r confirm
+    if [[ $confirm == "y" ]]; then
+        sudo pacman -Rns $orphans
+    else
+        echo "skipping removal"
+    fi
+
+else
+    echo "no orphans found"
+fi
+
+printf "removing old journal logs"
+sudo journalctl --vacuum-time=2weeks
+
+printf "cleaning pacman cache"
+sudo paccache -r 
+sudo paccache -r -k 3

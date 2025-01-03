@@ -1,0 +1,7 @@
+#!/bin/sh
+
+url='https://aur.archlinux.org/rpc?v=5&'
+pacman -Qmq | sort >| /tmp/pkgs
+
+curl -s "${url}type=info$(printf '&arg[]=%s' $(cat /tmp/pkgs))" \
+	| jq -r '.results[]|.Name' | sort | comm -13 - /tmp/pkgs

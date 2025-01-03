@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# Initialize the variable to hold the current package name
+current_package=""
+
+# Execute cargo install --list and pipe the output to while loop
+cargo install --list | while IFS= read -r line; do
+  # Check if the line is indented (starts with a space)
+  if [[ "$line" =~ ^[[:space:]] ]]; then
+    # Line is indented, treat as executable name, remove leading spaces
+    executable=$(echo "$line" | sed 's/^[[:space:]]*//')
+    echo "$current_package: $executable"
+  else
+    # Line is not indented, treat as new package, split to get package name
+    current_package=$(echo "$line" | awk '{print $1}')
+  fi
+done
+
