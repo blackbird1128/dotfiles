@@ -15,7 +15,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 TYPE="${BLOCK_INSTANCE:-mem}"
-PERCENT="${PERCENT:-true}"
+# PERCENT="${PERCENT:-true}"
+PERCENT="false"
 
 awk -v type=$TYPE -v percent=$PERCENT '
 /^MemTotal:/ {
