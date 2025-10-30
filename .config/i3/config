@@ -19,11 +19,12 @@
 # config starts here: #
 #######################
 
+
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-font pango: "Iosevka Nerd Font 12"
+font pango: Iosevka Aile 14
 
 # set the mod key to the winkey:
 set $mod Mod4
@@ -299,8 +300,6 @@ bindsym $mod+p exec --no-startup-id /usr/local/bin/switch-audio-port
 bindsym $mod+w exec --no-startup-id /usr/bin/firefox
 bindsym $mod+n exec --no-startup-id /usr/bin/thunar
 bindsym $mod+m exec --no-startup-id /usr/bin/emacs
-bindsym $mod+Print exec --no-startup-id scrot ~/%Y-%m-%d-%T-screenshot.png && notify-send "Screenshot saved to ~/$(date +"%Y-%m-%d-%T")-screenshot.png"
-
 
 bindsym Print exec import -window root -crop $(slop) ~/inbox/screenshot/"$(date +%F\ %T)".png  && notify-send "Screenshot saved to ~/inbox/screenshot/$(date +%F\ %T).png"
 
@@ -308,7 +307,7 @@ bindsym Shift+Print exec import -window root -crop $(slop) ~/inbox/screenshot/"$
 
 # Power Profiles menu switcher (rofi)
 bindsym $mod+Shift+p exec --no-startup-id ~/.config/i3/scripts/power-profiles
-
+bindsym $mod+Shift+F12 exec --no-startup-id smart-ocr
 ##########################################
 # configuration for workspace behaviour: #
 ##########################################
@@ -400,7 +399,11 @@ exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 #exec --no-startup-id dex -a -s /etc/xdg/autostart/:~/.config/autostart/
 exec --no-startup-id dex --autostart --environment i3
 
+
 # exec_always --no-startup-id redshift
+exec --no-startup-id redshift -r
+# Toggle redshift on/off
+bindsym $mod+Shift+l exec --no-startup-id pkill -x -USR1 redshift
 
 # start welcome app
 #exec --no-startup-id sh /usr/share/endeavouros/scripts/welcome --startdelay=3 
@@ -420,7 +423,7 @@ exec --no-startup-id ~/.screenlayout/monitor.sh
 
 # set wallpaper
 # exec --no-startup-id sleep 2 && nitrogen --restore
-exec --no-startup-id sleep 1 && feh --bg-scale ~/wallpapers/minimal_cyberpunk.png
+exec --no-startup-id sleep 1 && feh --bg-scale ~/wallpapers/wallpaper.png
 
 # set powersavings for display:
 exec --no-startup-id xset s 480 dpms 600 600 600
@@ -571,8 +574,6 @@ client.unfocused       $bg $bg $white $bg $bg
 client.urgent           $red $red $white $red $red
 
 
-
-
 ############################################
 # bar settings (input comes from i3blocks) #
 ############################################
@@ -584,7 +585,7 @@ bar {
 
     strip_workspace_numbers yes
 
- 	font pango: Noto Sans Regular 10
+    font pango: Iosevka Aile 13
     colors {
         # bar background color
         background  #32302f
