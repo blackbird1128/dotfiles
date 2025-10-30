@@ -1,0 +1,26 @@
+#!/bin/bash 
+
+# Temporary screenshot
+img=$(mktemp /tmp/ocrXXXX.png)
+maim -g "$(slop)" "$img"
+
+# Get geometry (width x height)
+read width height <<< $(identify -format "%w %h" "$img")
+
+# Heuristic for choosing PSM
+if (( width > 4 * height )); then
+    # Very wide, probably one line of text or code
+    psm=7
+elif (( height > 3 * width )); then
+    # Very tall, probably multi-line paragraph
+    psm=6
+else
+    # General case
+    psm=3
+fi
+
+# Run OCR (English + French as example)
+tesseract "$img" - -l eng+fra --oem 1 --psm $psm | xclip -selection clipboard
+
+rm "$img"
+notify-send "OCR done with --psm $psm (text copied to clipboard ✨)"
