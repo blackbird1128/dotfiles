@@ -1,45 +1,51 @@
 #!/bin/bash
 
-info=$(playerctl metadata --format "{{ artist }} - {{ title }}" 2>/dev/null)
+# --- get player status once ---
+status_raw=$(playerctl status 2>/dev/null || echo "Stopped")
 
-if $(playerctl status 2>/dev/null | grep -q "Playing"); then
-    status="▶"
-elif $(playerctl status 2>/dev/null | grep -q "Paused"); then
-    status="⏸"
-else
-    status="⏹"
-fi
+case "$status_raw" in
+  "Playing") status="▶" ;;
+  "Paused")  status="⏸" ;;
+  *)         status="⏹" ;;
+esac
 
-artist=$(playerctl metadata artist)
-title=$(playerctl metadata title)
-
-
-current=$(date -d@$(playerctl position --format "{{ position }}" | awk '{print $1/1000000}') -u +'%M:%S')
-
-
-# Get total length of the track in seconds
-total_length_microseconds=$(playerctl metadata mpris:length 2>/dev/null)
-total_length_seconds=$(echo "$total_length_microseconds" | awk '{printf "%d\n", $1 / 1000000}')
-total=$(date -u -d@"$total_length_seconds" +'%M:%S')
-
-
-info="$status $artist - $title ($current/$total)"
-
-
-metadata=$(playerctl metadata)
-
-# if the metadata contain "firefox" then it's a youtube video, so we don't need to show the total time or current time 
-# for now don't get more complicated, just check if the metadata contain "firefox" then don't show the current time and total time
-if [[ $metadata =~ "firefox" ]]; then
-    info="$status $artist - $title"
-fi
-
-if [[ $total == "00:00" ]]; then
-    info="$status $artist - $title"
-fi 
-
+# --- if nothing is playing, stop here ---
 if [[ $status == "⏹" ]]; then
-    info=""
+    echo ""
+    exit 0
 fi
 
-echo $info
+# --- gather all metadata in one go ---
+artist=$(playerctl metadata artist 2>/dev/null)
+title=$(playerctl metadata title 2>/dev/null)
+metadata=$(playerctl metadata 2>/dev/null)
+
+# --- skip timing for Firefox sources ---
+if grep -qi "firefox" <<< "$metadata"; then
+    echo "$artist - $title"
+    exit 0
+fi
+
+# --- get timing safely ---
+pos_us=$(playerctl position --format "{{ position }}" 2>/dev/null)
+len_us=$(playerctl metadata mpris:length 2>/dev/null)
+
+# default if empty
+pos_us=${pos_us:-0}
+len_us=${len_us:-0}
+
+pos_s=$(( pos_us / 1000000 ))
+len_s=$(( len_us / 1000000 ))
+
+# skip timing if invalid
+if [[ $len_s -le 0 ]]; then
+    echo "$artist - $title"
+    exit 0
+fi
+
+# --- format mm:ss ---
+current=$(date -u -d@"$pos_s" +'%M:%S')
+total=$(date -u -d@"$len_s" +'%M:%S')
+
+# --- final output ---
+echo "$$artist - $title ($current/$total)"
