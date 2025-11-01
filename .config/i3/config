@@ -157,7 +157,7 @@ mode "resize" {
         # bindsym ; resize grow width 10 px or 10 ppt
 
 # same bindings, but for the arrow keys
-	bindsym Left resize shrink width 10 px or 10 ppt
+    bindsym Left resize shrink width 10 px or 10 ppt
     bindsym Down resize grow height 10 px or 10 ppt
     bindsym Up resize shrink height 10 px or 10 ppt
     bindsym Right resize grow width 10 px or 10 ppt
@@ -297,9 +297,9 @@ bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 bindsym $mod+p exec --no-startup-id /usr/local/bin/switch-audio-port
 
 ## App shortcuts
-bindsym $mod+w exec --no-startup-id /usr/bin/firefox
-bindsym $mod+n exec --no-startup-id /usr/bin/thunar
-bindsym $mod+m exec --no-startup-id /usr/bin/emacs
+bindsym $mod+w exec --no-startup-id firefox
+bindsym $mod+n exec --no-startup-id thunar
+bindsym $mod+m exec --no-startup-id emacs
 
 bindsym Print exec import -window root -crop $(slop) ~/inbox/screenshot/"$(date +%F\ %T)".png  && notify-send "Screenshot saved to ~/inbox/screenshot/$(date +%F\ %T).png"
 
