@@ -72,8 +72,6 @@ zstyle ':completion:*' verbose true
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
-
-
 [[ -a "/etc/zsh_command_not_found" ]] && . /etc/zsh_command_not_found
 
 
