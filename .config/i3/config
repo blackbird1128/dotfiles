@@ -382,7 +382,7 @@ for_window [class=Why3] focus
 #exec_always --no-startup-id picom -b
 #
 # for custom config:
-exec_always --no-startup-id picom --config  ~/.config/picom/picom.conf
+#exec_always --no-startup-id picom --config  ~/.config/picom/picom.conf
 
 #############################################
 # autostart applications/services on login: #
@@ -434,6 +434,7 @@ exec --no-startup-id xset s 480 dpms 600 600 600
 # use xautolock to use autosuspend rules for mobile devices
 # https://wiki.archlinux.org/title/Session_lock#xautolock
 #exec --no-startup-id xautolock -time 60 -locker "systemctl suspend"
+exec --no-startup-id xss-lock --transfer-sleep-lock -- systemctl suspend-then-hibernate
 
 
 # xscreensaver
