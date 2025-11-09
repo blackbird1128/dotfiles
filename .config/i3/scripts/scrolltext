@@ -26,7 +26,13 @@ fi
 
 # --- Command output ---
 text="$(eval "$cmd" 2>/dev/null)"
-text="${text:-<no output>}"
+text="${text:-}"
+
+if [ -z "$text" ]; then
+    echo ""
+    exit 0
+fi
+
 
 # --- If it fits, just print it once ---
 if [ "${#text}" -le "$width" ]; then
