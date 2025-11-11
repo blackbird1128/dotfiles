@@ -48,4 +48,4 @@ current=$(date -u -d@"$pos_s" +'%M:%S')
 total=$(date -u -d@"$len_s" +'%M:%S')
 
 # --- final output ---
-echo "$$artist - $title ($current/$total)"
+echo "$artist - $title ($current/$total)"

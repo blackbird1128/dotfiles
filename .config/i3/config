@@ -436,7 +436,6 @@ exec --no-startup-id xset s 480 dpms 600 600 600
 #exec --no-startup-id xautolock -time 60 -locker "systemctl suspend"
 exec --no-startup-id xss-lock --transfer-sleep-lock -- systemctl suspend-then-hibernate
 
-
 # xscreensaver
 # https://www.jwz.org/xscreensaver
 #exec --no-startup-id xscreensaver --no-splash
