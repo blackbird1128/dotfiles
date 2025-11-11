@@ -42,21 +42,16 @@ else
 	compinit -C -d "$XDG_CACHE_HOME"/zsh/zcompdump-"$ZSH_VERSION" 
 fi;
 
-alias 'cd=z'
+alias rebuild-nix="sudo nixos-rebuild switch --flake ~/.config/nixos/"
+alias cd=z
 alias ls='eza --hyperlink' 
 alias ll='ls -l'
-alias cargo-update="cargo install --list | grep '^[a-zA-Z0-9_\-]* v[0-9.]*:$' | cut -d ' ' -f1 | xargs cargo install"
-alias cargo-list="cargo install --list | grep '^[a-zA-Z0-9_\-]* v[0-9.]*:$' | cut -d ' ' -f1"
 alias get-win-name="xprop | grep 'WM_CLASS(STRING)' | cut -d '\"' -f2"
 alias get-win-title="xprop | grep 'WM_NAME(STRING)' | cut -d '\"' -f2"
 alias get-win-class="xprop | grep 'WM_CLASS(STRING)' | cut -d '\"' -f4"
 alias icat="kitty +kitten icat --transfer-mode=stream"
 alias prename="perl-rename"
-alias paclist="pacman -Qq | fzf --preview 'pacman -Qil {}' --layout=reverse --bind 'enter:execute(pacman -Qil {} | less)'"
-alias paclist-debug="pacman -Q | grep -E '\-debug'"
-alias pacman-rm-debug="sudo pacman -Ru $(pacman -Q | grep -E '\-debug' | awk 'ORS=" " {print $1}')"
 alias wget=wget --hsts-file="$XDG_DATA_HOME/wget-hsts"
-alias lg="lazygit"
 alias cbcopy="xclip -sel clip"
 
 zstyle ':completion:*' auto-description 'specify: %d'
@@ -116,6 +111,11 @@ eval "$(zoxide init zsh)"
 eval "$(starship init zsh)"
 eval "$(mcfly init zsh)"
 
-# opam configuration
-[[ ! -r ~/.local/share/opam/opam-init/init.zsh ]] || source ~/.local/share/opam/opam-init/init.zsh  > /dev/null 2> /dev/null
 
+# BEGIN opam configuration
+# This is useful if you're using opam as it adds:
+#   - the correct directories to the PATH
+#   - auto-completion for the opam binary
+# This section can be safely removed at any time if needed.
+[[ ! -r '/home/alexj/.opam/opam-init/init.zsh' ]] || source '/home/alexj/.opam/opam-init/init.zsh' > /dev/null 2> /dev/null
+# END opam configuration
