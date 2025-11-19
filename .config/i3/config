@@ -470,7 +470,7 @@ exec --no-startup-id /usr/bin/dunst --config ~/.config/dunst/dunstrc
 #exec --no-startup-id blueberry-tray
 
 # networkmanager-applet
-#exec --no-startup-id nm-applet
+exec --no-startup-id nm-applet
 
 # clipman-applet
 #exec --no-startup-id xfce4-clipman
@@ -582,7 +582,6 @@ bar {
     position bottom
     i3bar_command i3bar 
     status_command i3blocks -c ~/.config/i3/i3blocks.conf 
-
     strip_workspace_numbers yes
 
     font pango:JetBrains Mono Regular 11
