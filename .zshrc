@@ -61,7 +61,6 @@ zstyle ':completion:*' group-name ''
 zstyle ':completion:*' menu select=2
 eval "$(dircolors -b)"
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
-zstyle ':completion:*' list-colors ''
 zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
 zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
 zstyle ':completion:*' menu select=long
@@ -117,3 +116,5 @@ eval "$(mcfly init zsh)"
 # This section can be safely removed at any time if needed.
 [[ ! -r '/home/alexj/.opam/opam-init/init.zsh' ]] || source '/home/alexj/.opam/opam-init/init.zsh' > /dev/null 2> /dev/null
 # END opam configuration
+[ -n "$EAT_SHELL_INTEGRATION_DIR" ] && \
+  source "$EAT_SHELL_INTEGRATION_DIR/zsh"
