@@ -169,7 +169,7 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-exec --no-startup-id $(which kanata) --cfg ~/.config/kanata/config.kbd
+exec --no-startup-id kanata --cfg ~/.config/kanata/config.kbd
 
 ######################################
 # keybindings for different actions: #
@@ -294,7 +294,7 @@ bindsym XF86AudioNext exec --no-startup-id playerctl next
 bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 
 # Redirect sound to headphones
-bindsym $mod+p exec --no-startup-id /usr/local/bin/switch-audio-port
+bindsym $mod+p exec --no-startup-id switch-audio-port
 
 ## App shortcuts
 bindsym $mod+w exec --no-startup-id firefox
@@ -389,7 +389,7 @@ for_window [class=Why3] focus
 #############################################
 
 #get auth work with polkit-gnome
-exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+exec --no-startup-id polkit-gnome-authentication-agent-1
 
 # dex execute .desktop files + apps using /etc/xdg/autostart.
 # when second to i3 a DE is installed or mixed usage of i3 + xfce4 or GNOME
@@ -443,7 +443,7 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- systemctl suspend-then-hi
 # Desktop notifications
 # dunst config used ~/.config/dunst/dunstrc
 # set alternative config if needed:
-exec --no-startup-id /usr/bin/dunst --config ~/.config/dunst/dunstrc
+exec --no-startup-id dunst --config ~/.config/dunst/dunstrc
 # may need to run dbus-launch explicitly: 
 #exec --no-startup-id dbus-launch /usr/bin/dunst
 #exec --no-startup-id /usr/bin/dunst
