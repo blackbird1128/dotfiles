@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+copy_to_clipboard=false
+if [[ "${1:-}" == "--clipboard" ]]; then
+    copy_to_clipboard=true
+fi
+
+screenshot_dir="$HOME/inbox/screenshot"
+timestamp="$(date '+%F %T')"
+file="$screenshot_dir/$timestamp.png"
+
+mkdir -p "$screenshot_dir"
+
+import -window root -crop "$(slop)" "$file"
+
+if "$copy_to_clipboard"; then
+    xclip -selection clipboard -t image/png -i "$file"
+    notify-send "Screenshot saved to $file and copied to clipboard"
+else
+    notify-send "Screenshot saved to $file"
+fi

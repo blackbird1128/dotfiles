@@ -301,9 +301,9 @@ bindsym $mod+w exec --no-startup-id firefox
 bindsym $mod+n exec --no-startup-id thunar
 bindsym $mod+m exec --no-startup-id emacs
 
-bindsym Print exec import -window root -crop $(slop) ~/inbox/screenshot/"$(date +%F\ %T)".png  && notify-send "Screenshot saved to ~/inbox/screenshot/$(date +%F\ %T).png"
+bindsym Print exec --no-startup-id ~/.config/i3/scripts/screenshot
 
-bindsym Shift+Print exec import -window root -crop $(slop) ~/inbox/screenshot/"$(date +%F\ %T)".png  && notify-send "Screenshot saved to ~/inbox/screenshot/$(date +%F\ %T).png and copied to clipboard" && xclip -selection clipboard -t image/png -i ~/inbox/screenshot/"$(date +%F\ %T)".png
+bindsym Shift+Print exec --no-startup-id ~/.config/i3/scripts/screenshot --clipboard
 
 # Power Profiles menu switcher (rofi)
 bindsym $mod+Shift+p exec --no-startup-id ~/.config/i3/scripts/power-profiles
@@ -405,12 +405,6 @@ exec --no-startup-id redshift -r
 # Toggle redshift on/off
 bindsym $mod+Shift+l exec --no-startup-id pkill -x -USR1 redshift
 
-# start welcome app
-#exec --no-startup-id sh /usr/share/endeavouros/scripts/welcome --startdelay=3 
-
-# num lock activated
-#exec --no-startup-id numlockx on
-
 # configure multiple keyboard layouts and hotkey to switch (Alt+CAPSLOCK in this example)
 #exec --no-startup-id setxkbmap -layout 'us,sk' -variant altgr-intl,qwerty -option 'grp:alt_caps_toggle'
 
@@ -443,7 +437,6 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- systemctl suspend-then-hi
 # Desktop notifications
 # dunst config used ~/.config/dunst/dunstrc
 # set alternative config if needed:
-exec --no-startup-id dunst --config ~/.config/dunst/dunstrc
 # may need to run dbus-launch explicitly: 
 #exec --no-startup-id dbus-launch /usr/bin/dunst
 #exec --no-startup-id /usr/bin/dunst
