@@ -1,11 +1,66 @@
 #!/usr/bin/env bash
 
-PICTURE=/tmp/i3lock.png
-SCREENSHOT="magick import -window root $PICTURE"
+set -euo pipefail
 
-$SCREENSHOT
-convert $PICTURE -scale 10% -scale 1000% $PICTURE
+picture="$(mktemp --suffix=.png /tmp/i3lock.XXXXXX)"
 
-i3lock -i $PICTURE
-rm $PICTURE
+cleanup() {
+  rm -f "$picture"
+}
+trap cleanup EXIT
 
+magick import -window root "$picture"
+
+magick "$picture" \
+  -resize 20% \
+  -blur 0x4 \
+  -resize 500% \
+  -fill "#28282899" \
+  -draw "rectangle 0,0 99999,99999" \
+  "$picture"
+
+if command -v i3lock-color > /dev/null 2>&1; then
+  i3lock-color \
+    --nofork \
+    --image="$picture" \
+    --force-clock \
+    --insidever-color=282828cc \
+    --insidewrong-color=282828cc \
+    --inside-color=282828cc \
+    --ringver-color=83a598ff \
+    --ringwrong-color=fb4934ff \
+    --ring-color=458588ff \
+    --line-color=00000000 \
+    --separator-color=00000000 \
+    --verif-color=83a598ff \
+    --wrong-color=fb4934ff \
+    --time-color=ebdbb2ff \
+    --date-color=a89984ff \
+    --layout-color=00000000 \
+    --keyhl-color=fabd2fff \
+    --bshl-color=fb4934ff \
+    --greeter-color=ebdbb2ff \
+    --time-size=36 \
+    --date-size=14 \
+    --greeter-size=13 \
+    --verif-size=12 \
+    --wrong-size=12 \
+    --ind-pos="x+w/2:y+h/2" \
+    --time-pos="ix:iy-42" \
+    --date-pos="ix:iy+2" \
+    --greeter-pos="ix:iy+38" \
+    --verif-pos="ix:iy+72" \
+    --wrong-pos="ix:iy+72" \
+    --verif-text="checking" \
+    --wrong-text="wrong" \
+    --noinput-text="" \
+    --lock-text="" \
+    --lockfailed-text="lock failed" \
+    --time-str="%H:%M" \
+    --date-str="%a %d %b" \
+    --greeter-text="LOCKED" \
+    --radius=125 \
+    --ring-width=8
+else
+  i3lock -n -u -i "$picture"
+fi
