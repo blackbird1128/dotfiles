@@ -1,0 +1,125 @@
+configuration {
+    show-icons: false;
+    font: "JetBrains Mono 12";
+    location: 0;
+    disable-history: true;
+    hide-scrollbar: true;
+}
+
+* {
+    bg: #282828;
+    bg-alt: #32302f;
+    bg-soft: #3c3836;
+    fg: #ebdbb2;
+    muted: #a89984;
+    green: #b8bb26;
+    yellow: #fabd2f;
+    orange: #fe8019;
+    blue: #83a598;
+
+    background-color: transparent;
+    text-color: @fg;
+    border-color: @green;
+}
+
+window {
+    width: 28%;
+    border: 2px;
+    border-radius: 0;
+    padding: 0;
+    background-color: @bg;
+}
+
+mainbox {
+    spacing: 0;
+    padding: 0;
+    background-color: @bg;
+}
+
+inputbar {
+    spacing: 8px;
+    padding: 12px 14px;
+    background-color: @bg-alt;
+    border: 0 0 2px 0;
+    border-color: @green;
+    children: [ prompt, entry ];
+}
+
+prompt {
+    text-color: @green;
+}
+
+entry {
+    placeholder: "";
+    text-color: @fg;
+}
+
+listview {
+    lines: 4;
+    columns: 1;
+    fixed-height: true;
+    cycle: true;
+    scrollbar: false;
+    spacing: 0;
+    padding: 6px;
+    background-color: @bg;
+}
+
+element {
+    spacing: 0;
+    padding: 10px 12px;
+    background-color: @bg;
+    text-color: @fg;
+}
+
+element normal.normal {
+    background-color: @bg;
+    text-color: @fg;
+}
+
+element alternate.normal {
+    background-color: @bg-alt;
+    text-color: @fg;
+}
+
+element selected.normal {
+    background-color: @green;
+    text-color: @bg;
+}
+
+element normal.active,
+element alternate.active {
+    text-color: @yellow;
+}
+
+element selected.active {
+    background-color: @yellow;
+    text-color: @bg;
+}
+
+element normal.urgent,
+element alternate.urgent {
+    text-color: @orange;
+}
+
+element selected.urgent {
+    background-color: @orange;
+    text-color: @bg;
+}
+
+element-text {
+    horizontal-align: 0.5;
+    vertical-align: 0.5;
+    background-color: transparent;
+    text-color: inherit;
+}
+
+message {
+    padding: 10px 14px;
+    background-color: @bg-soft;
+}
+
+textbox {
+    horizontal-align: 0.5;
+    text-color: @fg;
+}

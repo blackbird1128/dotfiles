@@ -1,0 +1,113 @@
+configuration {
+    show-icons: false;
+    font: "JetBrains Mono 10";
+    location: 0;
+    disable-history: true;
+    hide-scrollbar: true;
+}
+
+* {
+    bg: #282828;
+    bg-alt: #32302f;
+    bg-soft: #3c3836;
+    fg: #ebdbb2;
+    muted: #a89984;
+    blue: #83a598;
+    green: #b8bb26;
+    yellow: #fabd2f;
+
+    background-color: transparent;
+    text-color: @fg;
+    border-color: @blue;
+}
+
+window {
+    width: 58%;
+    border: 2px;
+    border-radius: 0;
+    padding: 0;
+    background-color: @bg;
+}
+
+mainbox {
+    spacing: 0;
+    padding: 0;
+    background-color: @bg;
+}
+
+inputbar {
+    spacing: 10px;
+    padding: 10px 12px;
+    background-color: @bg-alt;
+    border: 0 0 2px 0;
+    border-color: @blue;
+    children: [ prompt, entry ];
+}
+
+prompt {
+    text-color: @blue;
+}
+
+entry {
+    placeholder: "filter keybindings";
+    placeholder-color: @muted;
+    text-color: @fg;
+}
+
+listview {
+    lines: 18;
+    columns: 1;
+    fixed-height: true;
+    cycle: true;
+    scrollbar: false;
+    spacing: 0;
+    padding: 6px;
+    background-color: @bg;
+}
+
+element {
+    spacing: 0;
+    padding: 5px 8px;
+    background-color: @bg;
+    text-color: @fg;
+}
+
+element normal.normal {
+    background-color: @bg;
+    text-color: @fg;
+}
+
+element alternate.normal {
+    background-color: @bg-alt;
+    text-color: @fg;
+}
+
+element selected.normal {
+    background-color: @blue;
+    text-color: @bg;
+}
+
+element normal.active,
+element alternate.active {
+    text-color: @green;
+}
+
+element selected.active {
+    background-color: @green;
+    text-color: @bg;
+}
+
+element-text {
+    vertical-align: 0.5;
+    background-color: transparent;
+    text-color: inherit;
+}
+
+message {
+    padding: 8px 12px;
+    background-color: @bg-soft;
+}
+
+textbox {
+    text-color: @fg;
+}

@@ -1,0 +1,152 @@
+configuration {
+    modi: "drun,window,run";
+    show-icons: true;
+    display-drun: "apps";
+    display-window: "windows";
+    drun-display-format: "{name}";
+    font: "JetBrains Mono 11";
+    icon-theme: "hicolor";
+    terminal: "kitty";
+    location: 0;
+    disable-history: false;
+    hide-scrollbar: true;
+}
+
+* {
+    bg: #282828;
+    bg-alt: #32302f;
+    bg-soft: #3c3836;
+    fg: #ebdbb2;
+    muted: #a89984;
+    blue: #83a598;
+    green: #b8bb26;
+    yellow: #fabd2f;
+    red: #fb4934;
+
+    background-color: transparent;
+    text-color: @fg;
+    border-color: @blue;
+}
+
+window {
+    width: 42%;
+    border: 2px;
+    border-radius: 0;
+    padding: 0;
+    background-color: @bg;
+}
+
+mainbox {
+    spacing: 0;
+    padding: 0;
+    background-color: @bg;
+}
+
+inputbar {
+    spacing: 10px;
+    padding: 12px 14px;
+    background-color: @bg-alt;
+    border: 0 0 2px 0;
+    border-color: @blue;
+    children: [ prompt, entry ];
+}
+
+prompt {
+    padding: 0 8px 0 0;
+    text-color: @blue;
+}
+
+entry {
+    placeholder: "type to filter";
+    placeholder-color: @muted;
+    text-color: @fg;
+}
+
+message {
+    padding: 10px 14px;
+    background-color: @bg-soft;
+}
+
+textbox {
+    text-color: @fg;
+}
+
+listview {
+    lines: 10;
+    columns: 1;
+    fixed-height: true;
+    cycle: true;
+    scrollbar: false;
+    spacing: 0;
+    padding: 6px;
+    background-color: @bg;
+}
+
+element {
+    spacing: 10px;
+    padding: 8px 10px;
+    background-color: @bg;
+    text-color: @fg;
+}
+
+element-icon {
+    size: 22px;
+    background-color: transparent;
+}
+
+element-text {
+    vertical-align: 0.5;
+    background-color: transparent;
+    text-color: inherit;
+}
+
+element normal.normal {
+    background-color: @bg;
+    text-color: @fg;
+}
+
+element alternate.normal {
+    background-color: @bg-alt;
+    text-color: @fg;
+}
+
+element selected.normal {
+    background-color: @blue;
+    text-color: @bg;
+}
+
+element normal.active,
+element alternate.active {
+    text-color: @green;
+}
+
+element selected.active {
+    background-color: @green;
+    text-color: @bg;
+}
+
+element normal.urgent,
+element alternate.urgent {
+    text-color: @red;
+}
+
+element selected.urgent {
+    background-color: @red;
+    text-color: @bg;
+}
+
+mode-switcher {
+    spacing: 0;
+    background-color: @bg;
+}
+
+button {
+    padding: 8px 12px;
+    background-color: @bg;
+    text-color: @muted;
+}
+
+button selected {
+    background-color: @bg-alt;
+    text-color: @yellow;
+}
