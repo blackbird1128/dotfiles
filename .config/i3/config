@@ -56,9 +56,8 @@ new_window pixel 3
 hide_edge_borders both
 
 # Set inner/outer gaps
-gaps inner 2
-gaps outer 1
-
+gaps inner 4
+gaps outer 2
 # show window title bars (not officially supported with i3gaps)
 #default_border normal
 
@@ -180,7 +179,6 @@ bindsym $mod+Return exec --no-startup-id kitty
 
 # kill focused window
 bindsym $mod+q kill
-
 
 # exit-menu
 bindsym $mod+Shift+e exec --no-startup-id ~/.config/i3/scripts/powermenu
@@ -500,7 +498,7 @@ set $lightaqua #8ec07c
 
 # blue gruvbox
 # class                 border|backgr|text|indicator|child_border
-client.focused          $blue $blue $white $blue $blue
+client.focused          $lightblue $lightblue $bg $lightblue $lightblue
 client.focused_inactive $bg $bg $white $bg $bg
 client.unfocused       $bg $bg $white $bg $bg 
 client.urgent           $red $red $white $red $red
@@ -570,7 +568,7 @@ bar {
 ## rofi bindings fancy application menu ($mod+d /F9 optional disabled)
 
 bindsym $mod+d exec --no-startup-id rofi -modi drun -show drun \
-		-config ~/.config/rofi/rofidmenu.rasi
+		-theme ~/.config/rofi/rofidmenu.rasi
 
 # bindsym F9 exec --no-startup-id rofi -modi drun -show drun \
 #		-config ~/.config/rofi/rofidmenu.rasi
@@ -578,7 +576,7 @@ bindsym $mod+d exec --no-startup-id rofi -modi drun -show drun \
 ## rofi bindings for window menu ($mod+t /F10 optional disabled)
 
 bindsym $mod+t exec --no-startup-id rofi -show window \
-		-config ~/.config/rofi/rofidmenu.rasi
+		-theme ~/.config/rofi/rofidmenu.rasi
 
 # bindsym F10 exec --no-startup-id rofi -show window \
 #		-config ~/.config/rofi/rofidmenu.rasi
