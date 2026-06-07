@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Original source: https://gitlab.com/Nmoleo/i3-volume-brightness-indicator
 
-bar_color="#7f7fff"
+
+bar_color="#83a598"
 volume_step=1
 brightness_step=5
 max_volume=100
