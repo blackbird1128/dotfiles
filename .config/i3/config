@@ -281,9 +281,6 @@ bindsym XF86AudioPause exec --no-startup-id playerctl pause
 bindsym XF86AudioNext exec --no-startup-id playerctl next
 bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 
-# Redirect sound to headphones
-bindsym $mod+p exec --no-startup-id switch-audio-port
-
 ## App shortcuts
 bindsym $mod+w exec --no-startup-id firefox
 bindsym $mod+n exec --no-startup-id thunar
@@ -350,10 +347,8 @@ for_window [class=Why3] focus
 #get auth work with polkit-gnome
 exec --no-startup-id polkit-gnome-authentication-agent-1
 
-# exec_always --no-startup-id redshift
-exec --no-startup-id redshift -r
-# Toggle redshift on/off
-bindsym $mod+Shift+l exec --no-startup-id pkill -x -USR1 redshift
+# Redshift is managed by NixOS; toggle it on/off.
+bindsym $mod+Shift+l exec --no-startup-id systemctl --user kill --signal=USR1 --kill-whom=main redshift.service
 
 # start conky:
 #exec_always --no-startup-id conky
