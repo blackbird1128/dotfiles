@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/usr/bin/env bash
 
 # Temporary screenshot
 img=$(mktemp /tmp/ocrXXXX.png)

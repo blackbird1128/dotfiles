@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 if [ "${BLOCK_BUTTON:-}" = "1" ]; then
   setsid -f pavucontrol >/dev/null 2>&1
