@@ -56,7 +56,7 @@ alias get-win-title="xprop | grep 'WM_NAME(STRING)' | cut -d '\"' -f2"
 alias get-win-class="xprop | grep 'WM_CLASS(STRING)' | cut -d '\"' -f4"
 alias icat="kitty +kitten icat --transfer-mode=stream"
 alias prename="perl-rename"
-alias wget=wget --hsts-file="$XDG_DATA_HOME/wget-hsts"
+alias wget='wget --hsts-file="${XDG_DATA_HOME:-$HOME/.local/share}/wget-hsts"'
 alias cbcopy="xclip -sel clip"
 
 zstyle ':completion:*' auto-description 'specify: %d'
