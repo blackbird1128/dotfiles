@@ -168,8 +168,6 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-exec --no-startup-id kanata --cfg ~/.config/kanata/config.kbd
-
 ######################################
 # keybindings for different actions: #
 ######################################
