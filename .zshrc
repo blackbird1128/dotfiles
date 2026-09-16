@@ -34,13 +34,18 @@ HISTFILE=~/.zsh_history
 
 [[ -f ~/repos/why3/share/zsh/_why3 ]] && fpath=(~/repos/why3/share/zsh $fpath)
 
-# Use modern completion system
-autoload -Uz compinit 
-if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
-	compinit -d "$XDG_CACHE_HOME"/zsh/zcompdump-"$ZSH_VERSION" 
-else
-	compinit -C -d "$XDG_CACHE_HOME"/zsh/zcompdump-"$ZSH_VERSION" 
-fi;
+# Use one completion cache, checking for changes at least once a day.
+() {
+    setopt localoptions extendedglob
+    autoload -Uz compinit
+    local zsh_completion_dump="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump-$ZSH_VERSION"
+    mkdir -p -- "${zsh_completion_dump:h}"
+    if [[ ! -f "$zsh_completion_dump" || -n "$zsh_completion_dump"(#qN.mh+24) ]]; then
+        compinit -d "$zsh_completion_dump"
+    else
+        compinit -C -d "$zsh_completion_dump"
+    fi
+}
 
 alias rebuild-nix="sudo nixos-rebuild switch --flake ~/.config/nixos/"
 alias cd=z
