@@ -30,14 +30,16 @@ binmode(STDOUT, ":utf8");
 my $t_warn = $ENV{T_WARN}  || 70;
 my $t_crit = $ENV{T_CRIT}  || 90;
 my $chip   = $ENV{SENSOR_CHIP} || '';
+my $preferred_label = $ENV{CPU_TEMP_LABEL} || '';
 my $temperature = -9999;
 
 sub help {
     print <<'USAGE';
-Usage: temperature [-w <warning>] [-c <critical>] [--chip <chip>]
-  -w <percent>: warning threshold to become yellow
-  -c <percent>: critical threshold to become red
-  --chip <chip>: sensor chip
+Usage: temperature [-w <warning>] [-c <critical>] [--chip <chip>] [--label <label>]
+  -w <degrees>: warning threshold to become yellow
+  -c <degrees>: critical threshold to become red
+  --chip <chip>: restrict sensors to a specific chip
+  --label <label>: prefer an exact sensor label (or set CPU_TEMP_LABEL)
 USAGE
     exit 0;
 }
@@ -47,26 +49,60 @@ GetOptions(
     "w=i"    => \$t_warn,
     "c=i"    => \$t_crit,
     "chip=s" => \$chip,
+    "label=s" => \$preferred_label,
     );
 
 # Ensure 'sensors' exists
 system("command -v sensors >/dev/null 2>&1") == 0
     or die "Error: 'sensors' command not found.\n";
 
-# Get chip temperature
+# Read all temperature inputs together with their chip and human-readable
+# labels.  The first input is often an ACPI or NVMe sensor, not the CPU.
 my @cmd = ("sensors", "-u");
 push @cmd, $chip if length $chip;
 
 open my $sensors, "-|", @cmd
     or die "Failed to run sensors: $!";
 
+my ($current_chip, $current_label) = ('', '');
+my @candidates;
+
 while (<$sensors>) {
-    if (/^\s*temp\d+_input:\s*\+?(-?\d+(?:\.\d+)?)/) {
-        $temperature = $1;
-        last;
+    if (/^([^\s].*):\s*$/) {
+        $current_label = $1 if $1 ne 'Adapter';
+    } elsif (/^([^\s].*)$/) {
+        $current_chip = $1;
+        $current_label = '';
+    } elsif (/^\s*temp\d+_input:\s*\+?(-?\d+(?:\.\d+)?)/) {
+        push @candidates, {
+            chip => $current_chip,
+            label => $current_label,
+            value => $1,
+        };
     }
 }
-close $sensors;
+close $sensors or die "Failed to read sensors output\n";
+
+sub sensor_priority {
+    my ($candidate) = @_;
+
+    return 0 if length($preferred_label)
+        && lc($candidate->{label}) eq lc($preferred_label);
+    return 1 if $candidate->{chip} =~ /^(?:k10temp|zenpower)-/i
+        && $candidate->{label} =~ /^(?:Tctl|Tdie)$/i;
+    return 1 if $candidate->{chip} =~ /^coretemp-/i
+        && $candidate->{label} =~ /^Package id 0$/i;
+    return 2 if $candidate->{chip} =~ /^(?:k10temp|zenpower|coretemp)-/i;
+    return 10 if $candidate->{label} =~ /(?:CPU|Package|Tctl|Tdie)/i;
+    return 100;
+}
+
+if (@candidates) {
+    my ($selected) = sort {
+        sensor_priority($a) <=> sensor_priority($b)
+    } @candidates;
+    $temperature = $selected->{value};
+}
 
 $temperature == -9999 and die "Cannot find temperature\n";
 
