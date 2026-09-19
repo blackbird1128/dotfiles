@@ -358,7 +358,7 @@ bindsym $mod+Shift+l exec --no-startup-id systemctl --user kill --signal=USR1 --
 exec --no-startup-id sleep 1 && feh --bg-scale ~/wallpapers/wallpaper.png
 
 # set powersavings for display:
-exec --no-startup-id xset s 480 dpms 600 600 600
+exec --no-startup-id xset s 600 dpms 600 600 600
 
 # disable power saving (for example if using xscreensaver)
 #exec --no-startup-id xset -dpms
