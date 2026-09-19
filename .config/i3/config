@@ -212,9 +212,6 @@ for_window [class=kitty] focus
 for_window [class=(?i)firefox] focus
 for_window [class=Why3] focus
 
-# Session startup
-exec --no-startup-id polkit-gnome-authentication-agent-1
-
 bindsym $mod+Shift+l exec --no-startup-id systemctl --user kill --signal=USR1 --kill-whom=main redshift.service
 
 exec --no-startup-id sleep 1 && feh --bg-scale ~/wallpapers/wallpaper.png
