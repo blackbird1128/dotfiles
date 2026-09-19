@@ -220,8 +220,6 @@ exec --no-startup-id xset s 600 dpms 600 600 600
 
 exec --no-startup-id xss-lock --transfer-sleep-lock -- ~/.config/i3/scripts/blur-lock
 
-exec --no-startup-id nm-applet
-
 # Floating window rules
 for_window [instance="xrectsel"] floating enable
 
