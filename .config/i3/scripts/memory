@@ -25,11 +25,20 @@ awk -v type=$TYPE -v percent=$PERCENT '
 /^MemFree:/ {
 	mem_free=$2
 }
+/^MemAvailable:/ {
+	mem_available=$2
+}
 /^Buffers:/ {
-	mem_free+=$2
+	buffers=$2
 }
 /^Cached:/ {
-	mem_free+=$2
+	cached=$2
+}
+/^SReclaimable:/ {
+	sreclaimable=$2
+}
+/^Shmem:/ {
+	shmem=$2
 }
 /^SwapTotal:/ {
 	swap_total=$2
@@ -43,8 +52,14 @@ END {
 		used=(swap_total-swap_free)/1024/1024
 		total=swap_total/1024/1024
 	} else {
-		free=mem_free/1024/1024
-		used=(mem_total-mem_free)/1024/1024
+		# MemAvailable is the kernel estimate of memory that can be used
+		# without swapping. Fall back for kernels that do not expose it.
+		available=mem_available
+		if (available == 0) {
+			available=mem_free+buffers+cached+sreclaimable-shmem
+		}
+		free=available/1024/1024
+		used=(mem_total-available)/1024/1024
 		total=mem_total/1024/1024
 	}
 
