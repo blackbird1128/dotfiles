@@ -112,7 +112,7 @@ bindsym $mod+q kill
 # exit menu
 bindsym $mod+Shift+e exec --no-startup-id ~/.config/i3/scripts/powermenu
 
-bindsym $mod+l exec --no-startup-id ~/.config/i3/scripts/blur-lock
+bindsym $mod+l exec --no-startup-id screen-lock
 
 bindsym $mod+Shift+c reload
 
@@ -218,7 +218,7 @@ exec --no-startup-id sleep 1 && feh --bg-scale ~/wallpapers/wallpaper.png
 
 exec --no-startup-id xset s 600 dpms 600 600 600
 
-exec --no-startup-id xss-lock --transfer-sleep-lock -- ~/.config/i3/scripts/blur-lock
+exec --no-startup-id xss-lock --transfer-sleep-lock -- screen-lock
 
 # Floating window rules
 for_window [instance="xrectsel"] floating enable
