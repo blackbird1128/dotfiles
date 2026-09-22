@@ -41,15 +41,9 @@ if [ "${#text}" -le "$width" ]; then
 fi
 
 # --- Scrolling logic ---
-text="$text   "  # padding for smooth wrap
+text="$text      "  # padding for smooth wrap
 len=${#text}
 state_file="/tmp/i3blocks_scroll_state_$(echo "$prefix|$cmd" | md5sum | cut -d' ' -f1)"
-
-if [ -f "$state_file" ]; then
-    pos=$(cat "$state_file")
-else
-    pos=0
-fi
 
 total_width="$width"
 
@@ -60,10 +54,6 @@ if [ $scroll_width -lt 0 ]; then
 fi
 
 # Generate scrolling text
-text="$text   "
-len=${#text}
-state_file="/tmp/i3blocks_scroll_state_$(echo "$prefix|$cmd" | md5sum | cut -d' ' -f1)"
-
 pos=$(cat "$state_file" 2>/dev/null || echo 0)
 pos=$(( (pos + 1) % len ))
 echo "$pos" > "$state_file"
