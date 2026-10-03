@@ -109,10 +109,7 @@ unwrap () {
 
 }
 
-eval "$(zoxide init zsh)"
-eval "$(starship init zsh)"
-eval "$(mcfly init zsh)"
-
+[[ -r "$HOME/.config/zsh/home-manager-init.zsh" ]] && source "$HOME/.config/zsh/home-manager-init.zsh"
 
 # BEGIN opam configuration
 # This is useful if you're using opam as it adds:
